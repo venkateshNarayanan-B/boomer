@@ -2,11 +2,13 @@ import category from "../models/category";
 import Post from "../models/post";
 import slugify from "slugify";
 
+
+
 //create new post
 export const create = async(req, res) =>{
     try {
         //getting values from client
-        const { title, content, categories } = req.body;
+        const { title, content, categories, featuredImage } = req.body;
         //check for unique title
         const alreadyExist = await Post.findOne({slug: slugify(title.toLowerCase())});
         if(alreadyExist) return res.json({error: 'Title is taken!'});
@@ -21,7 +23,7 @@ export const create = async(req, res) =>{
         }
         //save post
         setTimeout(async ()=>{
-            const post = await new Post({ title, content, categories: ids, postedBy: req.user._id, slug: slugify(title)}).save();
+            const post = await new Post({ title, content, featuredImage, categories: ids, postedBy: req.auth._id, slug: slugify(title)}).save();
             res.json(post);
         }, 1000);
 

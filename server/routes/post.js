@@ -8,4 +8,5 @@ const router    =   express.Router();
 router.post('/create-post', requireSignin, isAdmin, create);
 router.get('/posts', posts);
 
+
 export default router;

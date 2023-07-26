@@ -6,6 +6,7 @@ import { DATABASE } from "./config";
 import authRoutes from "./routes/auth";
 import categoryRoutes from "./routes/category";
 import postRoutes from "./routes/post";
+import uploadRoutes from "./routes/upload";
 
 const morgan = require("morgan");
 
@@ -28,6 +29,7 @@ app.use(morgan("dev"));
 app.use("/api", authRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', postRoutes);
+app.use('/api', uploadRoutes);
 //console.log(process.config.DATABASE);
 
 app.listen(8000, () => console.log("Server running on port 8000"));
