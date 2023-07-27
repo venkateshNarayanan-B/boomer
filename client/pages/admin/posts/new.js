@@ -26,7 +26,7 @@ const New = () => {
   const [categories, setCategories] = useState([]);
   const [loadedCategories, setLoadedCategories] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [visibleMedia, setVisibleMedia] = useState(false);
+  const [preview, setPreview] = useState(false);
   const [media, setMedia] = useContext(MediaContext);
 
   useEffect(()=>{
@@ -102,6 +102,7 @@ const New = () => {
           <Col offset={1} lg={4} sm={22} xs={22}>
             {/*--Media section --*/}
            <Button type='dashed' style={{margin: '15px 0px 10px 0px', width: '100%'}} icon={<UploadOutlined />} onClick={()=> setMedia({...media, showMediaModal: true})}>Featured Image</Button>
+           <Button type='dashed' style={{margin: '15px 0px 10px 0px', width: '100%'}}  onClick={()=> setPreview(true)}>Preview</Button>
            
            <Modal 
            open={media?.showMediaModal} 
@@ -120,6 +121,19 @@ const New = () => {
             <br /><br />
             {media?.selected && ( <Image width="100%" src={media?.selected.url}/>)}
             <Button type='primary' style={{margin: '15px 0px 10px 0px', width: '100%'}} onClick={handlePublish} loading={loading}>Publish</Button>
+
+            <Modal 
+            open={preview} 
+            title='Preview' 
+            onOk={()=>setPreview(false)} 
+            onCancel={()=>setPreview(false)} 
+            width={800} 
+            footer={null} >
+              {media?.selected && ( <Image preview={false} src={media?.selected.url}/>)}
+              <h1>{title}</h1>
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+
+           </Modal>
             
           </Col>
         </Row>

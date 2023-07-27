@@ -27,10 +27,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/admin/posts.js"
     ],
-    "/admin/posts/new": [
+    "/admin/posts/[slug]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/posts/new.js"
+      "static/chunks/pages/admin/posts/[slug].js"
     ]
   },
   "ampFirstPages": []

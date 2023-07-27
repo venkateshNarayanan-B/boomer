@@ -4,10 +4,13 @@ import { Button, Col, List, Row } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/router';
+
 
 const post = () => {
   const [posts, setPosts] = useState([]);
-
+  const router = useRouter();
   useEffect(() =>{
     fetchPosts();
   }, []);
@@ -27,9 +30,31 @@ const post = () => {
     }
   }
   //use to edit post
-  const handleEdit = async () =>{}
+  const handleEdit = (item) =>{
+   
+    return router.push(`/admin/posts/${item.slug}`);
+  }
   //use to delete post
-  const handleDelete = async () =>{}
+  const handleDelete = async (item) =>{
+    try {
+      const answer = window.confirm("Are you sure want to delete the post!");
+      if(!answer) return;
+      await axios.delete(`/post/${item._id}`)
+      .then(response =>{
+       const { data } = response;
+       if(data?.ok){
+        fetchPosts();
+        toast.success("Post Deleted Succesfully!")
+       }
+      })
+      .catch(error =>{
+        console.log(error);
+        toast.error("Delete Post Failed!");
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
   return (
     <AdminLayout>

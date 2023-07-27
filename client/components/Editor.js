@@ -9,6 +9,7 @@ export const modules = {
         { indent: '-1' },
         { indent: '+1' },
       ],
+      [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }],
       ['link', 'image'],
       ['clean'],
     ],
@@ -35,4 +36,5 @@ export const modules = {
     'indent',
     'link',
     'image',
+    'align',
   ]
