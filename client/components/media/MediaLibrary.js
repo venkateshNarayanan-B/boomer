@@ -7,10 +7,12 @@ import { MediaContext } from '../../context/media';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 
-const MediaLibrary = () => {
+const MediaLibrary = ({ previewForAdmin = false}) => {
   const [auth, setAuth] = useContext(AuthContext);
   const [media, setMedia] = useContext(MediaContext);
   const [viewPreview, setViewPreview] = useState(false);
+
+  
 
   useEffect(()=>{
     fetchMedia();
@@ -87,15 +89,14 @@ const MediaLibrary = () => {
         onClick={()=>setMedia({...media, selected: image})}
         src={image.url} 
         style={{
-          paddingTop: 5,
-          paddingRight: 10,
-          height: "100px",
-          width: "100px",
+          padding: 10,
+          height: "200px",
+          width: "200px",
           objectFit: "cover",
           cursor: "pointer"
         }} 
         key={image._id} 
-        preview={viewPreview} 
+        preview={previewForAdmin === true ? previewForAdmin : viewPreview} 
         /><br />
         <CloseCircleOutlined style={{marginTop: "5px", color: "red"}} onClick={()=>handleDelete(image._id)}/>
         </Badge>
