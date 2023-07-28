@@ -2,7 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admin/posts/[slug]": "pages/admin/posts/[slug].js",
-  "/admin/media/library": "pages/admin/media/library.js",
-  "/admin/media/new": "pages/admin/media/new.js"
+  "/admin/users/new": "pages/admin/users/new.js"
 }

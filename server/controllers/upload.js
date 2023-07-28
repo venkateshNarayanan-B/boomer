@@ -1,6 +1,7 @@
 import cloudinary from "cloudinary"
 import { CLOUDINARY_KEY, CLOUDINARY_NAME, CLOUDINARY_SECRET } from "../config";
 import Media from "../models/media";
+import { boomerMailer } from "../modules/mailer";
 
 //config cloudinary
 cloudinary.config(
@@ -37,6 +38,17 @@ export const removeMedia = async (req, res) =>{
     try {
         const media = await Media.findByIdAndDelete(req.params.id);
         res.json({ok: true});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const sendMail = async(req, res) =>{
+    try {
+        const { from, to, subject, text, html } = req.body;
+        const info = boomerMailer({ from, to, subject, text, html });
+        console.log(info);
+        res.json(info);
     } catch (error) {
         console.log(error);
     }

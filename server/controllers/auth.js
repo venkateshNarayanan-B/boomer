@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import nanoid from "nanoid";
 import { EMAIL_FROM, JWT_SECRET, SENDGRID_KEY } from "../config";
 import { token } from "morgan";
+import { boomerMailer } from "../modules/mailer";
 
 // sendgrid
 const sgMail = require("@sendgrid/mail");
@@ -99,11 +100,11 @@ export const signin = async (req, res) => {
   }
 };
 
-export const forgotPassword = async (req, res) => {
+exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
   // find user by email
   const user = await User.findOne({ email });
-  //console.log("USER ===> ", user);
+  console.log("USER ===> ", user);
   if (!user) {
     return res.json({ error: "User not found" });
   }
@@ -112,31 +113,22 @@ export const forgotPassword = async (req, res) => {
   // save to db
   user.resetCode = resetCode;
   user.save();
-  //alter code
- 
-  const token ="boomer srting";
-  return res.json({
-    token,
-    user,
-  });
-  /* prepare email
+  // prepare email
   const emailData = {
     from: EMAIL_FROM,
     to: user.email,
     subject: "Password reset code",
     html: `<h1>Your password  reset code is: ${resetCode}</h1>`,
-  };*/
-
-  
-  /* send email
+  };
+  // send email
   try {
-    const data = await sgMail.send(emailData);
+    const data = await boomerMailer(emailData);
     console.log(data);
-    res.json({ ok: true });
+    res.json({ user: user, ok: true });
   } catch (err) {
     console.log(err);
     res.json({ ok: false });
-  }*/
+  }
 };
 
 export const resetPassword = async (req, res) => {
